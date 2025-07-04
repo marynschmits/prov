@@ -11,9 +11,10 @@ function scrollToPage(index) {
 
   setTimeout(() => {
     isScrolling = false;
-  }, 800); // gelijk aan transition-tijd
+  }, 800); // Moet overeenkomen met je CSS transition-tijd
 }
 
+// Scroll met muiswiel (desktop)
 document.addEventListener("wheel", (e) => {
   if (isScrolling) return;
 
@@ -26,7 +27,7 @@ document.addEventListener("wheel", (e) => {
   }
 });
 
-// Optioneel: toetsenbord
+// Scroll met toetsenbord
 document.addEventListener("keydown", (e) => {
   if (isScrolling) return;
 
@@ -39,6 +40,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+// Mute-knop voor achtergrondmuziek
 const music = document.getElementById("bg-music");
 const muteBtn = document.getElementById("mute-toggle");
 
@@ -47,18 +49,26 @@ muteBtn.addEventListener("click", () => {
   muteBtn.textContent = music.muted ? "🔇" : "🔊";
 });
 
+// Swipe scroll (touch - mobiel)
 let startY = 0;
 
-window.addEventListener('touchstart', e => {
+window.addEventListener('touchstart', (e) => {
   startY = e.touches[0].clientY;
 });
 
-window.addEventListener('touchend', e => {
+window.addEventListener('touchend', (e) => {
+  if (isScrolling) return;
+
   let endY = e.changedTouches[0].clientY;
-  if (startY > endY + 30) {
-    // swipe up detected -> ga naar volgende section
-  } else if (startY < endY - 30) {
-    // swipe down detected -> ga naar vorige section
+  let deltaY = endY - startY;
+
+  if (deltaY < -30 && currentIndex < sections.length - 1) {
+    // Swipe up
+    currentIndex++;
+    scrollToPage(currentIndex);
+  } else if (deltaY > 30 && currentIndex > 0) {
+    // Swipe down
+    currentIndex--;
+    scrollToPage(currentIndex);
   }
 });
-
