@@ -46,3 +46,19 @@ muteBtn.addEventListener("click", () => {
   music.muted = !music.muted;
   muteBtn.textContent = music.muted ? "🔇" : "🔊";
 });
+
+let startY = 0;
+
+window.addEventListener('touchstart', e => {
+  startY = e.touches[0].clientY;
+});
+
+window.addEventListener('touchend', e => {
+  let endY = e.changedTouches[0].clientY;
+  if (startY > endY + 30) {
+    // swipe up detected -> ga naar volgende section
+  } else if (startY < endY - 30) {
+    // swipe down detected -> ga naar vorige section
+  }
+});
+
