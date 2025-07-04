@@ -2,8 +2,13 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
    font-family: "Outfit", sans-serif;
+}
+
+
+.scroll-container::-webkit-scrollbar {
+  display: none;              /* Chrome, Safari, Edge */
 }
 
 .container {
